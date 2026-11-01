@@ -1,0 +1,44 @@
+# System architecture: services, stores, external systems, grouped by boundary.
+vars: {
+  d2-config: {
+    layout-engine: elk
+    theme-id: 4
+    pad: 40
+  }
+}
+direction: right
+
+classes: {
+  svc: {shape: hexagon}
+  store: {shape: cylinder}
+  queue: {shape: queue}
+  ext: {shape: cloud; style.stroke-dash: 3}
+  async: {style: {stroke-dash: 4; animated: true}}
+}
+
+user: Customer {shape: person}
+
+edge: Edge {
+  cdn: CDN
+  gw: API Gateway {class: svc}
+}
+
+platform: Platform {
+  orders: Orders {class: svc}
+  billing: Billing {class: svc}
+  events: Event Bus {class: queue}
+  orders-db: Orders DB {class: store}
+  billing-db: Billing DB {class: store}
+  orders -> orders-db: SQL
+  billing -> billing-db: SQL
+  orders -> events: publishes {class: async}
+  events -> billing: consumes {class: async}
+}
+
+stripe: Stripe {class: ext}
+
+user -> edge.cdn: HTTPS
+edge.cdn -> edge.gw
+edge.gw -> platform.orders: gRPC
+edge.gw -> platform.billing: gRPC
+platform.billing -> stripe: REST

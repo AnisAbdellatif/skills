@@ -1,0 +1,18 @@
+# Org chart / tree: top-down, person shapes.
+vars: {d2-config: {layout-engine: dagre; theme-id: 4}}
+direction: down
+
+classes: {p: {shape: person}}
+
+ceo: CEO {class: p}
+cto: CTO {class: p}
+cfo: CFO {class: p}
+eng: Eng Manager {class: p}
+sre: SRE Lead {class: p}
+fin: Controller {class: p}
+
+ceo -> cto
+ceo -> cfo
+cto -> eng
+cto -> sre
+cfo -> fin

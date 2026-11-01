@@ -1,0 +1,25 @@
+# Multi-board: root overview + layers (drill-down) + scenario + steps.
+# d2 multiboard.d2 out.svg   -> out/index.svg, out/layers/..., ...   (or out.pdf / out.pptx)
+vars: {d2-config: {layout-engine: elk; theme-id: 4; pad: 40}}
+direction: right
+
+client -> api -> db
+api.link: layers.api
+
+layers: {
+  api: API internals {
+    router -> handler -> service -> repo
+  }
+}
+
+scenarios: {
+  db down: {
+    db.style.opacity: 0.2
+    api -> cache: serve stale {style.stroke: red}
+  }
+}
+
+steps: {
+  1: Request {request: GET /x}
+  2: Handle {handler: api handler; request -> handler}
+}

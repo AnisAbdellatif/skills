@@ -1,0 +1,28 @@
+# State machine: ovals for states, labelled transitions, circle for start/end.
+vars: {d2-config: {layout-engine: elk; theme-id: 4; pad: 40}}
+direction: right
+
+classes: {
+  state: {shape: rectangle; style.border-radius: 12}
+  terminal: {shape: circle; label: ""; width: 24; height: 24}
+}
+
+start.class: terminal
+start.style.fill: "#333"
+done.class: terminal
+done.style.double-border: true
+done.style.fill: "#333"
+
+idle.class: state
+running.class: state
+paused.class: state
+failed.class: state
+
+start -> idle
+idle -> running: start
+running -> paused: pause
+paused -> running: resume
+running -> done: finish
+running -> failed: error
+failed -> idle: reset
+paused -> idle: cancel

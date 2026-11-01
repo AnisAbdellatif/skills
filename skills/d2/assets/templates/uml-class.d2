@@ -1,0 +1,40 @@
+# UML class diagram: inheritance (hollow triangle), composition (filled diamond), association.
+vars: {d2-config: {layout-engine: elk; theme-id: 4; pad: 40}}
+
+Figure: {
+  shape: class
+  -id: int
+  +area(): float
+  +draw()
+}
+Circle: {
+  shape: class
+  +radius: float
+  +area(): float
+}
+Rect: {
+  shape: class
+  +w: float
+  +h: float
+  +area(): float
+}
+Canvas: {
+  shape: class
+  \#shapes: "List<Figure>"
+  +add(s Figure)
+  +render()
+}
+
+Circle -> Figure: {
+  target-arrowhead.shape: triangle
+  target-arrowhead.style.filled: false
+}
+Rect -> Figure: {
+  target-arrowhead.shape: triangle
+  target-arrowhead.style.filled: false
+}
+# composition: draw part -> whole so the filled diamond is the target arrowhead
+Figure -> Canvas: {
+  source-arrowhead: "0..*"
+  target-arrowhead: 1 {shape: diamond; style.filled: true}
+}

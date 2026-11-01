@@ -1,0 +1,18 @@
+# Flowchart / decision tree. Diamonds for decisions, labelled yes/no edges.
+vars: {d2-config: {layout-engine: dagre; theme-id: 4}}
+direction: down
+
+start: Start {shape: oval}
+input: Receive request {shape: parallelogram}
+valid: Valid input? {shape: diamond}
+process: Process request
+retry: Retries left? {shape: diamond}
+fail: Return error {shape: oval; style.fill: "#fde8e8"}
+done: Return result {shape: oval; style.fill: "#e6f4ea"}
+
+start -> input -> valid
+valid -> process: yes
+valid -> retry: no
+retry -> input: yes
+retry -> fail: no
+process -> done

@@ -1,0 +1,22 @@
+# Grid layout: a table/matrix. grid-gap: 0 fuses the cells; header cells use a class.
+vars: {d2-config: {theme-id: 4; pad: 40}}
+grid-columns: 3
+grid-gap: 0
+
+classes: {
+  head: {style: {bold: true; fill: "#dbe7f5"}}
+  ok: {style.fill: "#e6f4ea"}
+  warn: {style.fill: "#fff4e5"}
+}
+
+Service.class: head
+Owner.class: head
+Status.class: head
+
+Billing
+Payments team
+healthy.class: ok
+
+Search
+Discovery team
+degraded.class: warn

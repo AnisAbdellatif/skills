@@ -1,0 +1,42 @@
+# Entity-relationship diagram. ELK routes edges to the exact column.
+vars: {d2-config: {layout-engine: elk; theme-id: 4; pad: 40}}
+direction: right
+
+users: {
+  shape: sql_table
+  id: uuid {constraint: primary_key}
+  email: text {constraint: unique}
+  created_at: timestamptz
+}
+orders: {
+  shape: sql_table
+  id: uuid {constraint: primary_key}
+  user_id: uuid {constraint: foreign_key}
+  total_cents: int
+  status: text
+}
+order_items: {
+  shape: sql_table
+  order_id: uuid {constraint: [primary_key; foreign_key]}
+  sku: text {constraint: [primary_key; foreign_key]}
+  qty: int
+}
+products: {
+  shape: sql_table
+  sku: text {constraint: primary_key}
+  name: text
+  price_cents: int
+}
+
+orders.user_id -> users.id: {
+  source-arrowhead.shape: cf-many
+  target-arrowhead.shape: cf-one-required
+}
+order_items.order_id -> orders.id: {
+  source-arrowhead.shape: cf-many
+  target-arrowhead.shape: cf-one-required
+}
+order_items.sku -> products.sku: {
+  source-arrowhead.shape: cf-many
+  target-arrowhead.shape: cf-one-required
+}

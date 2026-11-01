@@ -1,0 +1,24 @@
+# Sequence diagram: declare actors first (fixes order); dashed = responses.
+vars: {d2-config: {theme-id: 4; pad: 40}}
+shape: sequence_diagram
+
+user: User {shape: person}
+web: Web App
+api: API
+db: Database
+
+user -> web: click "Pay"
+web -> api: POST /payments
+api.charge -> db: insert pending
+db -> api.charge: id {style.stroke-dash: 5}
+api -> api: call PSP
+
+alt success: {
+  api -> web: 201 Created {style.stroke-dash: 5}
+  web -> user: receipt {style.stroke-dash: 5}
+}
+alt failure: {
+  api -> web: 402 {style.stroke-dash: 5}
+  web -> user: show error {style.stroke-dash: 5}
+}
+api."Idempotency key required"

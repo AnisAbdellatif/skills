@@ -1,0 +1,38 @@
+# C4 container diagram. Theme 303, Markdown labels, quoted protocol labels.
+vars: {d2-config: {theme-id: 303; layout-engine: elk; pad: 40}}
+
+customer: |md
+  ## Customer
+  [Person]
+
+  Holds accounts with the bank.
+| {shape: c4-person}
+
+system: Internet Banking {
+  web: |md
+    ## Web Application
+    [Container: Spring MVC]
+
+    Serves the single-page app.
+  | {shape: rectangle}
+  api: |md
+    ## API Application
+    [Container: Spring Boot]
+
+    JSON/HTTPS API.
+  | {shape: rectangle}
+  db: |md
+    ## Database
+    [Container: PostgreSQL]
+  | {shape: cylinder}
+}
+
+mail: |md
+  ## E-mail System
+  [Software System]
+| {shape: rectangle}
+
+customer -> system.web: "Visits\n[HTTPS]"
+system.web -> system.api: "Calls\n[JSON/HTTPS]"
+system.api -> system.db: "Reads/writes\n[SQL/TCP]"
+system.api -> mail: "Sends e-mail\n[SMTP]"
