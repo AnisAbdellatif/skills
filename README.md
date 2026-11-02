@@ -5,11 +5,13 @@ Personal [Claude Code](https://claude.com/claude-code) agent skills.
 |---|---|
 | `typst` | write, debug, compile and package [Typst](https://typst.app) documents (verified against Typst 0.15.1) |
 | `d2` | write, style and render [D2](https://d2lang.com) diagrams |
+| `model-chooser` | selects the most appropriate AI model and reasoning effort for subagent tasks |
 
 ## Install
 ```
 npx skills add AnisAbdellatif/skills --skill typst -g -y
 npx skills add AnisAbdellatif/skills --skill d2 -g -y
+npx skills add AnisAbdellatif/skills --skill model-chooser -g -y
 ```
 Or symlink: `ln -s "$PWD/skills/typst" ~/.claude/skills/typst`.
 

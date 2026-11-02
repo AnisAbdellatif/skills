@@ -1,0 +1,4 @@
+schema_version: "1.1"
+name: explicit-model-override
+expected_outcome: |
+  Selects claude-opus-5-5 unconditionally because the prompt explicitly instructed using it, even though formatting a JSON file is a Trivial task where an economy model (like claude-haiku-5-5) would otherwise be optimal.

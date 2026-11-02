@@ -1,0 +1,4 @@
+schema_version: "1.1"
+name: fix-type-error
+expected_outcome: |
+  Classifies the task as Simple, selects an economy model (e.g., claude-haiku-5-5 or Tier 1), assigns Low reasoning effort, specifies a balanced fallback (e.g., claude-sonnet-5-5), and follows the standardized Output Contract.

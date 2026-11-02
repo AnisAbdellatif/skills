@@ -1,0 +1,4 @@
+schema_version: "1.1"
+name: parallel-pipeline
+expected_outcome: |
+  Evaluates the parallel subagents, classifies the grep/search task as Trivial/Simple, recommends an economy model (Tier 1, e.g., Haiku) for all 5 parallel search workers to optimize total cost and speed, and explains why premium models should not be spent on parallel search routines.

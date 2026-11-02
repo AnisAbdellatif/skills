@@ -1,0 +1,4 @@
+schema_version: "1.1"
+name: security-audit
+expected_outcome: |
+  Classifies the task as Critical, selects a flagship/reasoning model (e.g., claude-opus-5-5 or Tier 4 / high-tier), assigns High or Max reasoning effort, designates a capable fallback, and outputs the contract.
