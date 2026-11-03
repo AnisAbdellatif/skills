@@ -91,7 +91,7 @@ Filter the **discovered available models** into tiers using pre-calibrated model
    - If targeting Tier 1 but only Tier 2 is available: Select the Tier 2 model with `effort: low` to minimize latency and token burn.
    - If targeting Tier 3/4 but only Tier 2 is available: Select the Tier 2 model and increase reasoning effort to `high` or `max`.
    - If targeting Tier 4 but only Tier 3 is available: Select the Tier 3 model with maximum reasoning effort.
-4. Select a fallback model that is also present in the available pool.
+4. Select a fallback model that is also present in the available pool. If the chosen model later proves unavailable or out of credits, first try the same model through another provider (see *Unavailable model or exhausted credits*).
 
 ---
 
@@ -135,6 +135,13 @@ If the prompt explicitly tells you to use a specific model:
 - Even if the task is Trivial and the prompt asks for a Tier 4 flagship model (e.g. Opus), or if the task is Critical and the prompt asks for a Tier 1 economy model (e.g. Haiku), obey the prompt's explicit model choice.
 - Match the requested name or alias (e.g. `opus` ➔ `claude-opus-5-5`) against the instance's available models.
 - Only if the requested model does not exist at all in the current instance, inform the user and select the closest available substitute.
+
+### Unavailable model or exhausted credits (Cross-provider check first)
+If the selected model (or an explicitly requested one) is unavailable, rate-limited, or its provider's credits are exhausted:
+1. **Before moving to the next model in line**, check whether the *same* model is offered by another provider in this instance (e.g. `claude-sonnet-5-5` via Anthropic and via Antigravity; inspect `orchestrator_capabilities` provider targets / model catalogs).
+2. If it is, route the task to that provider with the same model and reasoning effort.
+3. Only if no provider can serve that model, fall back to the next model in line — and apply the same cross-provider check to that fallback before going further.
+4. Report the provider switch in the output contract (`Rationale`).
 
 ### Parent model inheritance
 Use the parent orchestrator's model when:
